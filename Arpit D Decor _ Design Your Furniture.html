@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Arpit D Decor | Modular Furniture Manufacturing</title>
+<meta name="description" content="Modular kitchens, wardrobes, TV units, beds, study units, office furniture and pooja units, designed and manufactured by Arpit D Decor.">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=Newsreader:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+:root{--red:#d3161d;--red-d:#a30f15;--ink:#1c1a19;--cream:#f7f3ee;--paper:#fffdfa;--line:#e2dad0;--mute:#5f5852;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#f3eee8;--cream:#151312;--paper:#1e1b19;--line:#38332f;--mute:#b3aaa1}}
+:root[data-theme="dark"]{--ink:#f3eee8;--cream:#151312;--paper:#1e1b19;--line:#38332f;--mute:#b3aaa1}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font:17px/1.6 "Newsreader",Georgia,serif;overflow-x:hidden}
+h1,h2,h3,.sans{font-family:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif}
+a{color:inherit}:focus-visible{outline:3px solid #ff7a7f;outline-offset:3px}
+.wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+header{position:fixed;top:0;left:0;right:0;z-index:20;padding-top:env(safe-area-inset-top,0px);background:rgba(16,13,12,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08);color:#fff}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 0}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font:800 18px/1 "Bricolage Grotesque",Arial,sans-serif}
+.logo i{display:grid;place-items:center;width:38px;height:38px;background:var(--red);font-style:normal;font-size:16px;border-radius:3px;box-shadow:0 0 0 3px rgba(211,22,29,.25)}
+.logo small{display:block;font:400 11px "Newsreader",serif;opacity:.7;margin-top:3px}
+nav{display:flex;align-items:center}nav a{margin-left:22px;text-decoration:none;font:600 15px "Bricolage Grotesque",Arial,sans-serif;opacity:.85}nav a:hover{opacity:1}
+.btn{display:inline-block;padding:14px 24px;background:var(--red);color:#fff;text-decoration:none;font:600 16px "Bricolage Grotesque",Arial,sans-serif;border:0;border-radius:3px;cursor:pointer;box-shadow:0 8px 24px -8px rgba(211,22,29,.7);transition:transform .2s,background .2s}
+.btn:hover{background:var(--red-d);transform:translateY(-2px)}
+.btn.ghost{background:transparent;color:inherit;border:1.5px solid currentColor;box-shadow:none}
+nav .btn{padding:9px 16px;color:#fff;opacity:1}
+/* hero */
+.hero{position:relative;color:#fff;padding:110px 0 70px;min-height:100vh;display:flex;align-items:center;background:radial-gradient(60% 70% at 78% 45%,rgba(211,22,29,.42),transparent 70%),radial-gradient(40% 50% at 10% 90%,rgba(211,22,29,.18),transparent 70%),#100d0c}
+.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px) 0 0/64px 64px,linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px) 0 0/64px 64px;mask-image:radial-gradient(70% 70% at 60% 50%,#000,transparent)}
+.hero .wrap{position:relative;display:grid;grid-template-columns:.9fr 1.2fr;gap:30px;align-items:center;width:100%}
+h1{font-size:clamp(40px,5.6vw,74px);line-height:1;margin:0 0 20px;font-weight:800;letter-spacing:-.025em}
+.lead{font-size:20px;max-width:30em;opacity:.8;margin:0 0 28px}
+.cta{display:flex;flex-wrap:wrap;gap:12px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin:30px 0 0;padding:0;list-style:none}
+.chips li{padding:7px 14px;border:1px solid rgba(255,255,255,.2);border-radius:99px;font:600 13.5px "Bricolage Grotesque",Arial,sans-serif;background:rgba(255,255,255,.05)}
+.viewer{position:relative}
+#stage{position:relative;aspect-ratio:1/.92;width:100%;cursor:grab;touch-action:pan-y;border-radius:8px}
+#stage:active{cursor:grabbing}#stage canvas{display:block;width:100%;height:100%}
+#stage.nogl{background:linear-gradient(135deg,#3b332c,#1c1a19);display:grid;place-items:center}#stage.nogl::after{content:"3D preview needs WebGL";opacity:.6}
+.hint{position:absolute;left:12px;top:8px;font:600 13px "Bricolage Grotesque",Arial,sans-serif;opacity:.75;pointer-events:none}
+.ctrl{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:12px 14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:8px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.tabs,.sw{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.tabs button{padding:8px 14px;border-radius:99px;border:1px solid rgba(255,255,255,.25);background:transparent;color:#fff;font:600 14px "Bricolage Grotesque",Arial,sans-serif;cursor:pointer}
+.tabs button[aria-pressed="true"]{background:#fff;color:#100d0c;border-color:#fff}
+.sw button{width:30px;height:30px;border-radius:50%;border:2px solid rgba(255,255,255,.3);cursor:pointer;padding:0}
+.sw button[aria-pressed="true"]{border-color:#fff;box-shadow:0 0 0 3px rgba(211,22,29,.9)}
+.sw span,.dr{font:600 13px "Bricolage Grotesque",Arial,sans-serif;opacity:.8}
+.dr{padding:8px 12px;border:1px solid rgba(255,255,255,.25);border-radius:3px;background:transparent;color:#fff;cursor:pointer;opacity:1}
+/* strip */
+.strip{background:var(--red);color:#fff;overflow:hidden;white-space:nowrap;padding:14px 0;font:800 20px "Bricolage Grotesque",Arial,sans-serif}
+.strip div{display:inline-block;animation:mq 30s linear infinite}
+.strip span{margin:0 22px}.strip span::after{content:"";display:inline-block;width:9px;height:9px;background:#fff;margin-left:44px;transform:rotate(45deg)}
+@keyframes mq{to{transform:translateX(-50%)}}
+section{padding:78px 0}section.alt{background:var(--paper);border-block:1px solid var(--line)}
+h2{font-size:clamp(30px,4vw,48px);line-height:1.05;margin:0 0 14px;letter-spacing:-.02em}
+.sub{color:var(--mute);max-width:38em;margin:0 0 38px;font-size:19px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;perspective:1000px}
+.card{position:relative;padding:24px 20px 22px;background:var(--paper);border:1px solid var(--line);border-radius:6px;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .15s,box-shadow .2s;transform-style:preserve-3d;overflow:hidden}
+.card:hover{box-shadow:0 24px 40px -22px rgba(0,0,0,.45),0 0 0 1px var(--red)}
+.card .ic{width:54px;height:54px;margin-bottom:14px;transform:translateZ(30px);background:linear-gradient(145deg,var(--red),#7c0b10);border-radius:6px;position:relative;box-shadow:6px 8px 0 -2px rgba(211,22,29,.18)}
+.ic svg{position:absolute;inset:9px;width:36px;height:36px;fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.card h3{margin:0 0 6px;font-size:19px;transform:translateZ(18px)}.card p{margin:0;font-size:15px;color:var(--mute);line-height:1.45}
+.why{display:grid;grid-template-columns:repeat(5,1fr);gap:22px}
+.why h3{font-size:18px;margin:0 0 6px;padding-top:12px;border-top:3px solid var(--red)}.why p{margin:0;font-size:15px;color:var(--mute);line-height:1.5}
+.steps{list-style:none;counter-reset:s;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+.steps li{counter-increment:s;padding-top:14px;border-top:1px solid var(--ink)}
+.steps li::before{content:counter(s);display:block;font:800 34px/1 "Bricolage Grotesque",Arial,sans-serif;color:var(--red);margin-bottom:8px}
+.steps b{display:block;font:600 17px "Bricolage Grotesque",Arial,sans-serif}.steps span{font-size:15px;color:var(--mute);line-height:1.45;display:block;margin-top:4px}
+.contact{display:grid;grid-template-columns:1fr 1.1fr;gap:44px;align-items:start}
+.call{display:block;font:800 clamp(34px,5vw,58px)/1.1 "Bricolage Grotesque",Arial,sans-serif;text-decoration:none;color:var(--red);margin:6px 0 18px}
+form{background:var(--cream);border:1px solid var(--line);padding:24px;border-radius:6px;display:grid;gap:14px}
+label{font:600 14px "Bricolage Grotesque",Arial,sans-serif;display:grid;gap:5px}
+input,select,textarea{font:16px "Newsreader",Georgia,serif;padding:11px 12px;border:1px solid var(--line);border-radius:3px;background:var(--paper);color:var(--ink);width:100%}
+textarea{min-height:84px;resize:vertical}.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}.note{font-size:13px;color:var(--mute);margin:0}
+footer{background:#100d0c;color:#d8d0c7;padding:30px 0;font-size:14px}footer .wrap{display:flex;flex-wrap:wrap;gap:10px 30px;justify-content:space-between}footer a{color:#fff}
+.stick{display:none}
+@media(max-width:940px){.hero{min-height:0;padding-top:96px}.hero .wrap,.contact{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}.why,.steps{grid-template-columns:1fr 1fr}nav a:not(.btn){display:none}
+.stick{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:30;background:#100d0c;padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));gap:10px}
+.stick a{flex:1;text-align:center;padding:12px;border-radius:3px;text-decoration:none;font:600 15px "Bricolage Grotesque",Arial,sans-serif;color:#fff;background:var(--red)}.stick a+a{background:#1f8a4c}body{padding-bottom:64px}}
+@media(max-width:540px){.grid,.why,.steps,.two{grid-template-columns:1fr}.ctrl{justify-content:center}}
+@media(prefers-reduced-motion:reduce){.strip div{animation:none}*{transition:none!important;scroll-behavior:auto!important}}
+.studio{margin-top:12px;padding:14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:8px;display:grid;gap:10px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px}
+.row>b{flex:0 0 66px;font:600 13px "Bricolage Grotesque",Arial,sans-serif;opacity:.7}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{padding:6px 12px;border-radius:99px;border:1px solid rgba(255,255,255,.25);background:transparent;color:#fff;font:600 13px "Bricolage Grotesque",Arial,sans-serif;cursor:pointer}
+.chips button[aria-pressed="true"]{background:#fff;color:#100d0c;border-color:#fff}
+.chips.sw button{width:32px;height:32px;padding:0;border-radius:6px;background-size:cover;background-position:center;border:2px solid rgba(255,255,255,.25)}
+.chips.sw button[aria-pressed="true"]{border-color:#fff;box-shadow:0 0 0 2px var(--red)}
+.lab{font:600 13px "Bricolage Grotesque",Arial,sans-serif;opacity:.85}
+#wd{flex:1;min-width:120px;accent-color:#d3161d}
+.acts{display:flex;flex-wrap:wrap;gap:8px}
+.acts button{padding:11px 16px;border-radius:3px;border:1px solid rgba(255,255,255,.3);background:transparent;color:#fff;font:600 14px "Bricolage Grotesque",Arial,sans-serif;cursor:pointer}
+.acts .btn{flex:1;text-align:center;padding:11px 16px;font-size:14px;color:#fff}
+#stage{aspect-ratio:1/.85}
+@media(max-width:540px){.row>b{flex-basis:100%}}
+</style>
+</head>
+<body>
+<header><div class="wrap nav">
+<a class="logo" href="#top"><i>AP</i><span>ARPIT D DECOR<small>Modular furniture manufacturing</small></span></a>
+<nav><a href="#specialties">What we make</a><a href="#why">Why us</a><a href="#process">How it works</a><a href="#contact">Contact</a><a class="btn" href="tel:+917666461884">Call 7666461884</a></nav>
+</div></header>
+<main id="top">
+<div class="hero"><div class="wrap">
+<div>
+<h1>Design your own furniture. We build it.</h1>
+<p class="lead">We design and manufacture kitchens, wardrobes, TV units and more, sized to your space. Pick a piece, choose the finish, panel style, handles and size, then send your design to us.</p>
+<div class="cta"><a class="btn" href="#contact">Get a free quote</a><a class="btn ghost" href="tel:+917666461884">Call 7666461884</a></div>
+<ul class="chips"><li>Customized to your measurements</li><li>On-time delivery</li><li>Satisfaction guaranteed</li></ul>
+</div>
+<div class="viewer">
+<div id="stage" aria-label="Interactive 3D furniture preview"></div><div class="hint">Drag to rotate. Tap a door or drawer to open it.</div>
+<div class="studio">
+<div class="row"><b>Piece</b><div class="chips" id="g-u"></div></div>
+<div class="row"><b>Finish</b><div class="chips sw" id="g-fin"></div><span class="lab" id="fn"></span></div>
+<div class="row"><b>Panels</b><div class="chips" id="g-style"></div></div>
+<div class="row"><b>Handles</b><div class="chips" id="g-hd"></div><div class="chips sw" id="g-hc"></div></div>
+<div class="row"><b>Width</b><input type="range" id="wd" aria-label="Width"><span class="lab" id="wl"></span></div>
+<div class="row"><b>Room</b><div class="chips sw" id="g-wall"></div><div class="chips" id="g-lt"></div></div>
+<div class="acts"><button type="button" id="dr">Open all</button><button type="button" id="rn">Surprise me</button><a class="btn" id="send" href="#" target="_blank" rel="noopener">Send this design on WhatsApp</a></div>
+</div>
+</div>
+</div></div>
+<div class="strip" aria-hidden="true"><div><span>Modular kitchens</span><span>Wardrobes</span><span>TV units</span><span>Beds</span><span>Study units</span><span>Office furniture</span><span>Pooja units</span><span>Customized solutions</span><span>Modular kitchens</span><span>Wardrobes</span><span>TV units</span><span>Beds</span><span>Study units</span><span>Office furniture</span><span>Pooja units</span><span>Customized solutions</span></div></div>
+
+<section id="specialties"><div class="wrap">
+<h2>Everything for a finished interior</h2>
+<p class="sub">One workshop for every room. Each piece is built to your measurements, so nothing is left to make-do.</p>
+<div class="grid">
+<div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 20V8h18v12M3 13h18M9 8V4h6v4M8 16h2M14 16h2"/></svg></div><h3>Modular kitchen</h3><p>Base, wall and tall units with fitting for chimney, hob and sink.</p></div>
+<div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M5 3h14v18H5zM12 3v18M9 12v2M15 12v2"/></svg></div><h3>Wardrobes</h3><p>Sliding or hinged, with shelves, drawers and hanging space.</p></div>
+<div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 5h18v10H3zM8 19h8M12 15v4"/></svg></div><h3>TV units</h3><p>Wall panels, display shelves and hidden wiring.</p></div>
+<div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 18V8M21 18v-6a3 3 0 0 0-3-3H3M3 14h18M3 18h18"/></svg></div><h3>Beds</h3><p>Storage beds and headboards to match your room.</p></div>
+<div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 9h18M5 9v11M19 9v11M9 9v6h6V9M4 5h16"/></svg></div><h3>Study units</h3><p>Desks and shelving for study, work and hobbies.</p></div>
+<div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M8 4h8v7H8zM12 11v5M7 21l5-5 5 5"/></svg></div><h3>Office furniture</h3><p>Workstations, cabins and storage for commercial spaces.</p></div>
+<div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 6v12H4V9zM9 21v-6h6v6M12 3v3"/></svg></div><h3>Pooja units</h3><p>Compact mandir designs for wall or floor.</p></div>
+<div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16zM14 6l3 3"/></svg></div><h3>Customized solutions</h3><p>Send us your size and idea. We will design it.</p></div>
+</div></div></section>
+
+<section id="why" class="alt"><div class="wrap">
+<h2>Built well, so it lasts</h2><p class="sub">What you can expect on every order.</p>
+<div class="why">
+<div><h3>Premium quality</h3><p>Good boards, hardware and finishes, checked before dispatch.</p></div>
+<div><h3>Expert craftsmanship</h3><p>Skilled hands on cutting, fitting and finishing.</p></div>
+<div><h3>Modern designs</h3><p>Clean lines and practical layouts for today's homes.</p></div>
+<div><h3>Customized solutions</h3><p>Sized to your room, storage needs and budget.</p></div>
+<div><h3>Durable and long lasting</h3><p>Made for daily use, year after year.</p></div>
+</div></div></section>
+
+<section id="process"><div class="wrap">
+<h2>From idea to installed</h2><p class="sub">A simple process, so you always know what happens next.</p>
+<ol class="steps">
+<li><b>Tell us what you need</b><span>Call or message us with the room and the furniture.</span></li>
+<li><b>Measure and design</b><span>We visit, take measurements and share a design.</span></li>
+<li><b>Clear quote</b><span>You approve design, finish and price before we start.</span></li>
+<li><b>We manufacture</b><span>Your furniture is made in our workshop.</span></li>
+<li><b>Delivery and fitting</b><span>Delivered on time and installed at your place.</span></li>
+</ol></div></section>
+
+<section id="contact" class="alt"><div class="wrap contact">
+<div>
+<h2>We turn your ideas into reality</h2><p class="sub">Call us, or send the details and we will get back to you with a quote.</p>
+<a class="call" href="tel:+917666461884">7666461884</a>
+<div class="cta"><a class="btn" href="https://wa.me/917666461884?text=Hello%20Arpit%20D%20Decor%2C%20I%20want%20a%20quote%20for%20modular%20furniture." target="_blank" rel="noopener">Message on WhatsApp</a></div>
+<p class="note" style="margin-top:18px">Customized furniture for homes, offices and commercial spaces.</p>
+</div>
+<form id="f">
+<div class="two"><label>Your name<input name="n" required autocomplete="name"></label><label>Phone number<input name="p" type="tel" required autocomplete="tel"></label></div>
+<label>What do you need?<select name="t"><option>Modular kitchen</option><option>Wardrobe</option><option>TV unit</option><option>Bed</option><option>Study unit</option><option>Office furniture</option><option>Pooja unit</option><option>Something else</option></select></label>
+<label>Details (room size, budget, timeline)<textarea name="d"></textarea></label>
+<button class="btn" type="submit">Send enquiry on WhatsApp</button><p class="note">This opens WhatsApp with your details filled in.</p>
+</form></div></section>
+</main>
+<footer><div class="wrap"><span>&copy; Arpit D Decor. Designing comfort, crafting style.</span><span>Website preview by <a href="https://technologies.krishidnya.com" target="_blank" rel="noopener">Krishidnya Technologies</a></span></div></footer>
+<div class="stick"><a href="tel:+917666461884">Call now</a><a href="https://wa.me/917666461884" target="_blank" rel="noopener">WhatsApp</a></div>
+
+<script>
+(function(){
+/* forms + card tilt */
+document.getElementById('f').addEventListener('submit',function(e){e.preventDefault();var d=new FormData(e.target);
+window.open('https://wa.me/917666461884?text='+encodeURIComponent('Hello Arpit D Decor,\nName: '+d.get('n')+'\nPhone: '+d.get('p')+'\nLooking for: '+d.get('t')+'\nDetails: '+(d.get('d')||'-')),'_blank');});
+document.querySelectorAll('.card').forEach(function(c){
+c.addEventListener('pointermove',function(e){var r=c.getBoundingClientRect();c.style.setProperty('--ry',((e.clientX-r.left)/r.width-.5)*10+'deg');c.style.setProperty('--rx',(.5-(e.clientY-r.top)/r.height)*10+'deg');});
+c.addEventListener('pointerleave',function(){c.style.setProperty('--rx','0deg');c.style.setProperty('--ry','0deg');});});
+/* 3D studio */
+var el=document.getElementById('stage');
+if(!window.THREE){el.classList.add('nogl');return;}
+const T=THREE;let R;try{R=new T.WebGLRenderer({antialias:true,alpha:true});}catch(x){el.classList.add('nogl');return;}
+R.setPixelRatio(Math.min(devicePixelRatio,2));R.shadowMap.enabled=true;R.shadowMap.type=T.PCFSoftShadowMap;R.outputEncoding=T.sRGBEncoding;el.appendChild(R.domElement);
+const S=new T.Scene(),C=new T.PerspectiveCamera(32,1,.1,60),$=s=>document.querySelector(s);
+const hemi=new T.HemisphereLight(0xffffff,0x6a5646,.8),key=new T.DirectionalLight(0xfff1de,.85);
+key.position.set(3,6,5);key.castShadow=true;key.shadow.mapSize.set(1024,1024);Object.assign(key.shadow.camera,{left:-5,right:5,top:5,bottom:-3});S.add(hemi,key);
+/* procedural finishes */
+const rnd=(a,b)=>a+Math.random()*(b-a);
+const fill=(g,c)=>{g.fillStyle=c;g.fillRect(0,0,256,256);};
+function wood(g,a,b){fill(g,a);for(let i=0;i<80;i++){g.strokeStyle=b;g.globalAlpha=rnd(.05,.28);g.lineWidth=rnd(.5,2.6);const y=rnd(0,256);g.beginPath();g.moveTo(0,y);g.bezierCurveTo(80,y+rnd(-9,9),170,y+rnd(-9,9),256,y+rnd(-6,6));g.stroke();}g.globalAlpha=1;}
+function marble(g,a,b,n){fill(g,a);for(let i=0;i<n;i++){g.strokeStyle=b;g.globalAlpha=rnd(.15,.7);g.lineWidth=rnd(.5,2.2);let x=rnd(0,256),y=rnd(0,256);g.beginPath();g.moveTo(x,y);for(let k=0;k<7;k++){x+=rnd(-40,50);y+=rnd(-40,50);g.lineTo(x,y);}g.stroke();}g.globalAlpha=1;}
+function flute(g,a,b){fill(g,a);for(let x=0;x<256;x+=16){const d=g.createLinearGradient(x,0,x+16,0);d.addColorStop(0,b);d.addColorStop(.5,a);d.addColorStop(1,b);g.fillStyle=d;g.fillRect(x,0,16,256);}}
+function linen(g,a,b){fill(g,a);g.strokeStyle=b;for(let i=0;i<256;i+=3){g.globalAlpha=rnd(.05,.2);g.beginPath();g.moveTo(0,i);g.lineTo(256,i);g.moveTo(i,0);g.lineTo(i,256);g.stroke();}g.globalAlpha=1;}
+function geo(g){fill(g,'#efe6d6');for(let x=0;x<256;x+=64)for(let y=0;y<256;y+=64){g.fillStyle='#c4161c';g.beginPath();g.moveTo(x+32,y+4);g.lineTo(x+60,y+32);g.lineTo(x+32,y+60);g.lineTo(x+4,y+32);g.fill();g.fillStyle='#1c1a19';g.beginPath();g.moveTo(x+32,y+22);g.lineTo(x+42,y+32);g.lineTo(x+32,y+42);g.lineTo(x+22,y+32);g.fill();}}
+const FIN=[
+{l:'Warm oak',d:g=>wood(g,'#c4a67f','#8a6a45')},{l:'Walnut',d:g=>wood(g,'#6b4a35','#2e1c12')},{l:'White marble',d:g=>marble(g,'#eee9e1','#8f8f94',14)},
+{l:'Onyx and gold',d:g=>marble(g,'#17171b','#c9a24a',16)},{l:'Fluted ivory',d:g=>flute(g,'#ddd6ca','#a9a194')},{l:'Slate linen',d:g=>linen(g,'#4a5461','#9aa4b0')},
+{l:'Rosewood',d:g=>wood(g,'#7a2226','#2c0709')},{l:'Geometric',d:geo}];
+FIN.forEach(f=>{const c=document.createElement('canvas');c.width=c.height=256;f.d(c.getContext('2d'));f.bg=c.toDataURL();f.t=new T.CanvasTexture(c);f.t.wrapS=f.t.wrapT=T.RepeatWrapping;f.t.encoding=T.sRGBEncoding;f.t.anisotropy=4;f.k=FIN.indexOf(f);});
+FIN.forEach((f,i)=>f.k=i);
+const M=(c,r=.6,m=0)=>new T.MeshStandardMaterial({color:c,roughness:r,metalness:m});
+const fin=M(0xffffff,.5),inn=M(0xc8c8c8,.55),carc=M(0xece6dc,.7),hm=M(0xc9a24a,.3,.9),metal=M(0xd0d0d0,.3,.9),dark=M(0x161616,.4),stone=M(0x2a2a2e,.2,.1),led=new T.MeshBasicMaterial({color:0xffdfae}),glass=new T.MeshStandardMaterial({color:0x9fb8c8,roughness:.05,transparent:true,opacity:.32});
+/* room */
+const fc=document.createElement('canvas');fc.width=fc.height=256;const fg=fc.getContext('2d');wood(fg,'#a98560','#6b4a2c');fg.fillStyle='rgba(0,0,0,.35)';for(let x=0;x<256;x+=64)fg.fillRect(x,0,2,256);
+const flT=new T.CanvasTexture(fc);flT.wrapS=flT.wrapT=T.RepeatWrapping;flT.repeat.set(5,4);flT.encoding=T.sRGBEncoding;
+const floor=new T.Mesh(new T.PlaneGeometry(14,10),new T.MeshStandardMaterial({map:flT,roughness:.4}));floor.rotation.x=-Math.PI/2;floor.position.z=3.5;floor.receiveShadow=true;
+const wallM=M(0xe9e2d6,.95),wall=new T.Mesh(new T.PlaneGeometry(14,7),wallM);wall.position.set(0,3.5,-.65);wall.receiveShadow=true;
+const skirt=new T.Mesh(new T.BoxGeometry(14,.14,.04),M(0xffffff,.6));skirt.position.set(0,.07,-.63);S.add(floor,wall,skirt);
+const U=new T.Group();S.add(U);
+/* parts */
+const parts=[],lts=[];
+function box(w,h,d,m,x,y,z,p){const o=new T.Mesh(new T.BoxGeometry(w,h,d),m);o.position.set(x,y,z);o.castShadow=o.receiveShadow=true;p.add(o);return o;}
+function light(p,x,y,z,i){const l=new T.PointLight(0xffd9a0,i,4);l.position.set(x,y,z);p.add(l);lts.push({l,i});}
+const st={u:'wardrobe',fin:0,style:'flat',hd:'bar',hc:0,wall:0,eve:0,w:{wardrobe:3.2,slide:3.2,tv:3.4,kitchen:3.6,bed:1.8,study:2.4,pooja:1.4}};
+function face(g,w,h){const s=st.style;
+if(s=='shaker'){box(w-.02,h,.025,fin,0,0,0,g);box(w-.2,h-.2,.012,inn,0,0,.017,g);[1,-1].forEach(a=>{box(w-.02,.09,.03,fin,0,a*(h/2-.045),.005,g);box(.09,h-.18,.03,fin,a*(w/2-.055),0,.005,g);});}
+else if(s=='glass'){[1,-1].forEach(a=>{box(w-.02,.05,.03,metal,0,a*(h/2-.025),0,g);box(.05,h-.1,.03,metal,a*(w/2-.035),0,0,g);});box(w-.08,h-.08,.01,glass,0,0,0,g);}
+else if(s=='louver'){box(w-.02,h,.015,inn,0,0,-.012,g);for(let k=0;k<Math.floor(h/.1);k++){const b=box(w-.04,.085,.012,fin,0,-h/2+.07+k*.1,.02,g);b.rotation.x=-.5;}}
+else box(w-.02,h,.04,fin,0,0,0,g);}
+function hdl(g,x,y,len,v){const s=st.hd;if(s=='knob'){const k=new T.Mesh(new T.SphereGeometry(.035,14,10),hm);k.position.set(x,y,.05);g.add(k);}else if(s=='bar')box(v?.022:len,v?len:.022,.03,hm,x,y,.055,g);else box(v?.012:len,v?len:.012,.01,dark,x,y,.03,g);}
+function reg(g,o,k,c,op){const P={o,k,c,op,v:0,t:0};g.userData.p=P;parts.push(P);}
+function door(p,w,h,cx,cy,z,s){const g=new T.Group();g.position.set(cx+s*w/2,cy,z);p.add(g);const f=new T.Group();f.position.x=-s*w/2;g.add(f);face(f,w,h);hdl(g,-s*(w-.07),0,Math.min(h*.5,.5),1);reg(g,g.rotation,'y',0,s*1.75);}
+function slide(p,w,h,cx,cy,z,dx){const g=new T.Group();g.position.set(cx,cy,z);p.add(g);face(g,w,h);hdl(g,(dx>=0?1:-1)*(w/2-.07),0,.5,1);if(dx)reg(g,g.position,'x',cx,cx+dx);}
+function drawer(p,w,h,cx,cy,z){const g=new T.Group();g.position.set(cx,cy,z);p.add(g);face(g,w,h);hdl(g,0,h/2-.06,w*.4,0);box(w-.08,h-.06,.4,carc,0,0,-.22,g);reg(g,g.position,'z',z,z+.38);}
+function shell(g,W,H,D){box(.04,H,D,carc,-W/2,H/2,0,g);box(.04,H,D,carc,W/2,H/2,0,g);box(W,.04,D,carc,0,H,0,g);box(W,.1,D,carc,0,.05,0,g);box(W,H,.03,carc,0,H/2,-D/2+.015,g);}
+const CL=[0xc4161c,0x223344,0xe0dcd4,0x554433,0x2f4f3f];
+function inside(g,W,H,D){const dv=-W/2+W*.42;box(.03,H,D-.04,carc,dv,H/2,0,g);for(let i=1;i<5;i++)box(W*.42-.04,.03,D-.05,carc,-W/2+W*.21,.4+i*(H-.5)/5,0,g);
+const rl=W*.58-.1;box(rl,.03,.03,metal,dv+W*.29,H-.3,0,g);for(let i=0;i<Math.floor(rl/.15);i++){const h=.9+(i%3)*.12;box(.05,h,.38,M(CL[i%5],.9),dv+.12+i*.15,H-.32-h/2,0,g);}
+box(W-.1,.02,.03,led,0,H-.06,D/2-.08,g);light(g,0,H-.25,.1,1);}
+const B={
+wardrobe(W){const g=new T.Group(),H=2.6,D=.7,n=Math.max(2,Math.round(W/.85)),dw=(W-.08)/n;shell(g,W,H,D);inside(g,W,H,D);for(let i=0;i<n;i++)door(g,dw,H-.12,-W/2+.04+dw*(i+.5),.06+(H-.12)/2,D/2+.02,i%2?1:-1);return g;},
+slide(W){const g=new T.Group(),H=2.6,D=.7,n=W>3.4?4:3,pw=W/n;shell(g,W,H,D);inside(g,W,H,D);for(let i=0;i<n;i++)slide(g,pw+.06,H-.12,-W/2+pw*(i+.5),.06+(H-.12)/2,D/2+.02+((i+1)%2)*.05,i%2?0:(i==n-1?-1:1)*pw);return g;},
+tv(W){const g=new T.Group(),tw=Math.min(2.2,W-1.5),n=Math.max(2,Math.round(W/1.1));
+box(W+.3,2.4,.06,fin,0,1.55,-.3,g);box(W,.5,.45,carc,0,.5,-.05,g);box(W+.04,.03,.47,fin,0,.775,-.05,g);
+for(let i=0;i<n;i++)drawer(g,W/n,.46,-W/2+W/n*(i+.5),.5,.19);
+box(tw,tw*.56,.04,dark,0,1.65,-.25,g);box(tw-.06,tw*.56-.06,.01,new T.MeshStandardMaterial({color:0x0b1622,roughness:.1,emissive:0x0d3a66,emissiveIntensity:.7}),0,1.65,-.225,g);
+[-1,1].forEach(k=>{const x=k*(W/2-.35);[1.3,1.9].forEach(y=>{box(.6,.03,.3,fin,x,y,-.12,g);box(.58,.015,.02,led,x,y-.02,.02,g);});});
+const v=new T.Mesh(new T.CylinderGeometry(.07,.1,.32,20),M(0xc4161c,.3));v.position.set(W/2-.4,.96,-.05);v.castShadow=true;g.add(v);
+const pl=new T.Mesh(new T.SphereGeometry(.15,16,12),M(0x3f6b3a,.9));pl.position.set(-W/2+.35,1.47,-.12);g.add(pl);light(g,0,1.4,.4,.8);return g;},
+kitchen(W){const g=new T.Group(),n=Math.max(3,Math.round(W/.9)),dw=W/n;
+box(W,.1,.6,dark,0,.05,0,g);box(W,.7,.58,carc,0,.45,0,g);box(W+.04,.04,.64,stone,0,.82,.02,g);box(W,.9,.03,M(0xd9d1c5,.4),0,1.29,-.29,g);
+box(.6,.015,.5,dark,W*.22,.85,.02,g);box(.6,.02,.4,metal,-W*.22,.85,.02,g);box(.03,.28,.03,metal,-W*.22,1,-.2,g);
+box(W,.7,.36,carc,0,1.95,-.12,g);box(W-.2,.015,.02,led,0,1.6,.05,g);
+for(let i=0;i<n;i++){const cx=-W/2+dw*(i+.5),s=i%2?1:-1;door(g,dw-.02,.5,cx,.35,.31,s);drawer(g,dw-.02,.18,cx,.68,.31);door(g,dw-.02,.68,cx,1.95,.08,s);}
+const b=new T.Mesh(new T.SphereGeometry(.12,16,12),M(0xc4161c,.5));b.position.set(W/2-.3,.96,.1);b.castShadow=true;g.add(b);light(g,0,1.5,.4,1);return g;},
+bed(W){const g=new T.Group(),L=2;
+box(W+.1,.28,L,fin,0,.3,0,g);box(W,.22,L-.1,M(0xf4f1ec,.9),0,.55,.03,g);box(W+.02,.06,L*.5,M(0x8c1a20,.9),0,.69,.42,g);
+[-1,1].forEach(k=>{const p=box(W/2-.1,.13,.4,M(0xffffff,.9),k*(W/4),.72,-L/2+.4,g);p.rotation.x=.25;});
+box(W+.5,1.15,.1,fin,0,.9,-L/2-.03,g);box(W-.1,.8,.03,inn,0,.95,-L/2+.03,g);box(W+.3,.02,.02,led,0,.4,-L/2+.06,g);
+[-1,1].forEach(k=>{const x=k*(W/2+.55);box(.5,.5,.4,carc,x,.3,-L/2+.25,g);drawer(g,.46,.2,x,.4,-L/2+.46);const l=new T.Mesh(new T.CylinderGeometry(.05,.08,.2,16),hm);l.position.set(x,.65,-L/2+.25);g.add(l);const sh=new T.Mesh(new T.ConeGeometry(.13,.16,20,1,true),new T.MeshBasicMaterial({color:0xffdfae,side:T.DoubleSide}));sh.position.set(x,.83,-L/2+.25);g.add(sh);});
+light(g,0,.9,-L/2+.4,1);return g;},
+study(W){const g=new T.Group();
+box(W,.05,.65,fin,0,.78,0,g);box(.6,.72,.6,carc,-W/2+.32,.4,0,g);[0,1,2].forEach(k=>drawer(g,.56,.2,-W/2+.32,.66-k*.22,.32));
+box(.05,.75,.6,fin,W/2-.04,.4,0,g);box(W,.35,.03,carc,0,.55,-.3,g);
+box(W,1.3,.03,carc,0,2,-.3,g);[1.35,2,2.65].forEach(y=>box(W,.03,.34,fin,0,y,-.15,g));box(.03,1.3,.34,fin,-W/2,2,-.15,g);box(.03,1.3,.34,fin,W/2,2,-.15,g);
+for(let i=0;i<Math.floor(W*.48/.15);i++){const h=.24+((i*7)%5)*.05;box(.11,h,.24,M(CL[i%5],.8),-W/2+.12+i*.15,1.365+h/2,-.14,g);}
+door(g,W*.25-.02,.6,W*.125,1.68,.03,-1);door(g,W*.25-.02,.6,W*.375,1.68,.03,1);
+const ch=M(0x7a1f24,.8);box(.5,.06,.5,ch,0,.5,.75,g);box(.5,.55,.06,ch,0,.82,1,g);box(.05,.45,.05,dark,0,.25,.75,g);
+const lb=new T.Mesh(new T.CylinderGeometry(.06,.08,.05,16),dark);lb.position.set(W*.3,.83,0);g.add(lb);const ls=new T.Mesh(new T.ConeGeometry(.14,.18,20,1,true),new T.MeshBasicMaterial({color:0xffdfae,side:T.DoubleSide}));ls.position.set(W*.3,1.05,0);g.add(ls);
+box(W-.1,.015,.02,led,0,1.33,-.02,g);light(g,W*.3,1.1,.1,.8);return g;},
+pooja(W){const g=new T.Group();
+box(W,.9,.5,carc,0,.45,0,g);box(W+.06,.05,.56,fin,0,.925,0,g);door(g,W/2-.02,.8,-W/4,.45,.27,-1);door(g,W/2-.02,.8,W/4,.45,.27,1);
+[-1,1].forEach(k=>box(.09,1.7,.09,fin,k*(W/2-.05),1.85,.2,g));box(W-.16,1.6,.03,inn,0,1.8,-.2,g);box(W+.06,.05,.5,fin,0,1.2,0,g);
+box(W,.2,.5,fin,0,2.75,0,g);box(W+.16,.07,.56,fin,0,2.9,0,g);
+const dm=new T.Mesh(new T.SphereGeometry(W*.38,24,12,0,Math.PI*2,0,Math.PI/2),hm);dm.position.set(0,2.93,0);dm.castShadow=true;g.add(dm);
+const fn=new T.Mesh(new T.ConeGeometry(.05,.3,12),hm);fn.position.set(0,2.93+W*.38+.13,0);g.add(fn);
+const id=new T.Mesh(new T.ConeGeometry(.13,.34,16),hm);id.position.set(0,1.4,0);id.castShadow=true;g.add(id);
+const dy=new T.Mesh(new T.SphereGeometry(.05,12,8),new T.MeshBasicMaterial({color:0xffa030}));dy.position.set(W*.28,1.26,.1);g.add(dy);
+box(W-.1,.02,.03,led,0,2.62,.2,g);light(g,0,1.9,.3,1);return g;}
+};
+const NAMES={wardrobe:'Hinged wardrobe',slide:'Sliding wardrobe',tv:'TV unit',kitchen:'Modular kitchen',bed:'Bed',study:'Study unit',pooja:'Pooja unit'};
+const LIM={wardrobe:[2.4,4.2],slide:[2.4,4.2],tv:[2.4,4.2],kitchen:[2.7,4.6],bed:[1.4,2.2],study:[1.6,3.2],pooja:[1,2]};
+const WALLS=[['Cream','#e9e2d6'],['Sage','#b7c4b0'],['Blush','#dcb9aa'],['Slate blue','#56657a'],['White','#f4f4f2']];
+const HC=[['Gold',0xc9a24a],['Steel',0xd0d0d0],['Black',0x1a1a1a]];
+let allOpen=false;
+function apply(){fin.map=inn.map=FIN[st.fin].t;fin.bumpMap=st.fin==4?FIN[4].t:null;fin.bumpScale=1.2;fin.needsUpdate=inn.needsUpdate=true;hm.color.set(HC[st.hc][1]);wallM.color.set(WALLS[st.wall][1]);
+hemi.intensity=st.eve?.28:.8;key.intensity=st.eve?.3:.85;lts.forEach(o=>o.l.intensity=o.i*(st.eve?2.6:.6));}
+function build(){parts.length=0;lts.length=0;while(U.children.length)U.remove(U.children[0]);const W=st.w[st.u];U.add(B[st.u](W));parts.forEach(p=>p.v=p.t=allOpen?1:0);
+C.position.set(0,st.u=='pooja'?2.2:1.9,7.2+W*.4);C.lookAt(0,st.u=='pooja'?1.5:1.2,0);apply();info();}
+function info(){const W=st.w[st.u],f=(W*2.6).toFixed(1);$('#wl').textContent=f+' ft';
+$('#fn').textContent=FIN[st.fin].l;
+const m='Hello Arpit D Decor, I designed this on your website:\nFurniture: '+NAMES[st.u]+'\nFinish: '+FIN[st.fin].l+'\nPanel style: '+st.style+'\nHandles: '+st.hd+', '+HC[st.hc][0]+'\nWidth: about '+f+' ft\nWall colour: '+WALLS[st.wall][0]+'\nPlease share a quote.';
+$('#send').href='https://wa.me/917666461884?text='+encodeURIComponent(m);}
+function group(id,items,k,fn){const b=$(id);b.innerHTML='';items.forEach(it=>{const x=document.createElement('button');x.type='button';x.title=it.l;x.setAttribute('aria-label',it.l);if(it.bg)x.style.backgroundImage='url('+it.bg+')';else if(it.c)x.style.background=it.c;else x.textContent=it.l;x.setAttribute('aria-pressed',st[k]==it.k);x.onclick=()=>{st[k]=it.k;fn();ui();};b.appendChild(x);});}
+function ui(){group('#g-u',Object.keys(NAMES).map(k=>({k,l:NAMES[k]})),'u',()=>{build();});
+group('#g-fin',FIN,'fin',()=>{apply();info();});
+group('#g-style',['flat','shaker','glass','louver'].map(k=>({k,l:k[0].toUpperCase()+k.slice(1)})),'style',()=>{build();});
+group('#g-hd',['bar','knob','none'].map(k=>({k,l:k=='none'?'Push-open':k[0].toUpperCase()+k.slice(1)})),'hd',()=>{build();});
+group('#g-hc',HC.map((h,i)=>({k:i,l:h[0],c:'#'+h[1].toString(16).padStart(6,'0')})),'hc',()=>{apply();info();});
+group('#g-wall',WALLS.map((w,i)=>({k:i,l:w[0],c:w[1]})),'wall',()=>{apply();info();});
+group('#g-lt',[{k:0,l:'Day'},{k:1,l:'Evening'}],'eve',()=>{apply();});
+const r=$('#wd'),L=LIM[st.u];r.min=L[0];r.max=L[1];r.step=.1;r.value=st.w[st.u];info();}
+$('#wd').oninput=e=>{st.w[st.u]=+e.target.value;build();};
+const dr=$('#dr');dr.onclick=()=>{allOpen=!allOpen;parts.forEach(p=>p.t=allOpen?1:0);dr.textContent=allOpen?'Close all':'Open all';};
+$('#rn').onclick=()=>{const p=a=>Math.floor(Math.random()*a);st.fin=p(FIN.length);st.style=['flat','shaker','glass','louver'][p(4)];st.hd=['bar','knob','none'][p(3)];st.hc=p(3);st.wall=p(5);build();ui();};
+/* interaction */
+let rot=0,tgt=0,drag=false,moved=0,sx=0,vis=true;const rm=matchMedia('(prefers-reduced-motion:reduce)').matches,rc=new T.Raycaster();
+el.addEventListener('pointerdown',e=>{drag=true;moved=0;sx=e.clientX;});
+addEventListener('pointermove',e=>{if(!drag)return;moved+=Math.abs(e.clientX-sx);tgt=Math.max(-1.1,Math.min(1.1,tgt+(e.clientX-sx)*.008));sx=e.clientX;});
+addEventListener('pointerup',e=>{if(!drag)return;drag=false;if(moved>5)return;const r=el.getBoundingClientRect();rc.setFromCamera({x:((e.clientX-r.left)/r.width)*2-1,y:-((e.clientY-r.top)/r.height)*2+1},C);
+const h=rc.intersectObjects(U.children,true);for(const x of h){let o=x.object;while(o&&!(o.userData&&o.userData.p))o=o.parent;if(o){o.userData.p.t=o.userData.p.t?0:1;return;}}});
+function size(){const w=el.clientWidth,h=el.clientHeight;R.setSize(w,h,false);C.aspect=w/h;C.updateProjectionMatrix();}
+new ResizeObserver(size).observe(el);size();
+new IntersectionObserver(e=>{vis=e[0].isIntersecting;}).observe(el);
+function loop(t){requestAnimationFrame(loop);if(!vis)return;rot+=(tgt-rot)*.1;U.rotation.y=rot+(drag||rm?0:Math.sin(t/2600)*.1);
+parts.forEach(p=>{p.v+=(p.t-p.v)*.09;p.o[p.k]=p.c+(p.op-p.c)*p.v;});R.render(S,C);}
+build();ui();requestAnimationFrame(loop);
+setTimeout(()=>{allOpen=true;parts.forEach(p=>p.t=1);dr.textContent='Close all';},1500);
+})();
+</script>
+</body>
+</html>
